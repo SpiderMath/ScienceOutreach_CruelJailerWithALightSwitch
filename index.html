@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <title>Light Switch</title>
     <style>
+        @font-face {
+            font-family: "Dyslexic";
+            src: url("OpenDyslexic-Bold.otf") format("opentype");
+            font-weight: 900;
+        }
+
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         html, body { margin: 0; height: 100%; overflow: hidden; }
 
@@ -25,7 +31,7 @@
         body.on { background: #ffe9a8; }
 
         #state {
-            font: 900 calc(var(--u) * 11) Arial, sans-serif;
+            font: 900 calc(var(--u) * 11) "Dyslexic", Arial, sans-serif;
             letter-spacing: .06em;
             color: #f2f2f2;
             user-select: none;
