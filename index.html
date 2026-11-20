@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Light Switch</title>
+    <style>
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html, body { margin: 0; height: 100%; overflow: hidden; }
+
+        /* Center everything */
+        body, .plate, .ring, .cap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body {
+            --u: min(1vw, 1vh);
+            flex-direction: column;
+            gap: calc(var(--u) * 5);
+            background: #1b1b1b;
+            transition: background .25s;
+        }
+        body.on { background: #ffe9a8; }
+
+        #state {
+            font: 900 calc(var(--u) * 11) Arial, sans-serif;
+            letter-spacing: .06em;
+            color: #f2f2f2;
+            user-select: none;
+            transition: color .25s;
+        }
+        body.on #state { color: #2b2b2b; }
+
+        /* Wall plate (the button) */
+        .plate {
+            width: calc(var(--u) * 48);
+            height: calc(var(--u) * 48);
+            border: 0;
+            border-radius: calc(var(--u) * 3.5);
+            background: linear-gradient(145deg, #f4f4f4, #dcdcdc);
+            box-shadow: 0 calc(var(--u) * 2) calc(var(--u) * 4.5) rgba(0, 0, 0, .5),
+                        inset 0 calc(var(--u) * .3) 0 #fff;
+            cursor: pointer;
+            outline: none;
+        }
+        .plate:focus-visible { box-shadow: 0 0 0 calc(var(--u) * .8) #2f7de1; }
+
+        /* Dark ring, glows amber when ON */
+        .ring {
+            width: calc(var(--u) * 28);
+            height: calc(var(--u) * 28);
+            border-radius: 50%;
+            background: #3a3a3a;
+            box-shadow: inset 0 calc(var(--u) * .4) calc(var(--u) * .8) #000;
+            transition: background .2s, box-shadow .2s;
+        }
+        body.on .ring {
+            background: #ffaa00;
+            box-shadow: 0 0 calc(var(--u) * 2.5) rgba(255, 170, 0, .85);
+        }
+
+        /* Push-button cap */
+        .cap {
+            width: calc(var(--u) * 24.5);
+            height: calc(var(--u) * 24.5);
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 30%, #fff, #e2e2e2 70%, #cfcfcf);
+            box-shadow: 0 calc(var(--u) * .9) calc(var(--u) * 1.4) rgba(0, 0, 0, .45);
+            transition: transform .08s, box-shadow .08s;
+        }
+        .plate:active .cap {
+            transform: scale(.96);
+            box-shadow: 0 calc(var(--u) * .2) calc(var(--u) * .4) rgba(0, 0, 0, .5);
+        }
+
+        /* Power icon */
+        .icon {
+            width: calc(var(--u) * 7.5);
+            height: calc(var(--u) * 7.5);
+            fill: none;
+            stroke: #888;
+            stroke-width: 2.4;
+            stroke-linecap: round;
+            transition: stroke .2s;
+        }
+        body.on .icon { stroke: #e68a00; }
+    </style>
+</head>
+<body>
+    <div id="state">OFF</div>
+
+    <button class="plate" id="switch" role="switch" aria-checked="false" aria-label="Light switch">
+        <div class="ring">
+            <div class="cap">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 3v9" />
+                    <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
+                </svg>
+            </div>
+        </div>
+    </button>
+
+    <script>
+        const sw = document.getElementById('switch');
+        const label = document.getElementById('state');
+
+        sw.addEventListener('click', () => {
+            const on = document.body.classList.toggle('on');
+            sw.setAttribute('aria-checked', on);
+            label.textContent = on ? 'ON' : 'OFF';
+        });
+    </script>
+</body>
+</html>
